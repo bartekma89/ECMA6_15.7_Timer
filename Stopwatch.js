@@ -3,33 +3,28 @@ class Stopwatch extends React.Component {
 		super(props);
 		this.state = {
 			running: false,
-			times: {
-				minutes: 0,
-				seconds: 0,
-				miliseconds: 0
-			}
+			minutes: 0,
+			seconds: 0,
+			miliseconds: 0
 		}
 	}
 
 	format(times) {
-		return `${pre0(times.minutes)}:${pre0(times.seconds)}:${pre0(times.miliseconds)}`;
+		return `${this.pre0(times.minutes)}:${this.pre0(times.seconds)}:${this.pre0(times.miliseconds)}`;
 	}
 
 	calculate() {
 		this.setState( (prevState) => {
 			return {miliseconds: prevState.miliseconds + 1}
 		})
-		if(this.state.times.miliseconds >= 100) {
+		if(this.state.miliseconds >= 100) {
 			this.setState( (prevState) => {return {seconds: prevState.seconds + 1}});
-			this.setState( () => {miliseconds: 0});
+			this.setState( () => {return {miliseconds: 0}});
 		}
-		if(this.state.times.seconds >= 60) {
+		if(this.state.seconds >= 60) {
 			this.setState( (prevState) => {return {minutes: prevState.minutes + 1}});
-			this.setState( () => {seconds: 0});
+			this.setState( () => { return {seconds: 0}});
 		}
-
-		console.log(this.state.times.miliseconds);
-		console.log(this.state.times.seconds);
 	}
 
 	step() {
@@ -37,7 +32,8 @@ class Stopwatch extends React.Component {
 		this.calculate();
 	}
 
-	start() {
+	start(event) {
+		event.preventDefault();
 		if(!this.state.running) {
 			this.setState({ running: true })
 			this.watch = setInterval(() => this.step(), 10);
@@ -45,9 +41,15 @@ class Stopwatch extends React.Component {
 	}
 
 	stop() {
-		this.state.running = false;
-		clearInterval(this.watch);
-		console.log('stop');
+		if(this.state.running) {
+			this.setState({ running: false })
+			clearInterval(this.watch);
+		}
+	}
+
+	pre0(value) {
+		let result = value.toString();
+		return (result.length < 2) ? '0' + result : result;
 	}
 
 	render() {
@@ -58,16 +60,11 @@ class Stopwatch extends React.Component {
 						<Button text="Stop"  onClick={this.stop.bind(this)}/>
 						<Button text="Reset" />
 					</div>
-					<div className="stopwatch">{this.format(this.state.times)}</div>
+					<div className="stopwatch">{this.format(this.state)}</div>
 					<ul className="result">Result list</ul>
 				</div>
 			)
 	}
-}
-
-function pre0(value) {
-	let result = value.toString();
-	return (result.length < 2) ? '0' + result : result;
 }
 
 const Button = (props) => {
