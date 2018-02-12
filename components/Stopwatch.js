@@ -62,6 +62,7 @@ class Stopwatch extends React.Component {
 	}
 
 	shotTime() {
+		if(this.state.running) {
 			this.setState( (prevState) => { return { id: prevState.id + 1 }} )
 			let singleTime = {
 				time: this.format(this.state),
@@ -71,6 +72,7 @@ class Stopwatch extends React.Component {
 			this.setState( (prevState) => { return {
 				resultList: [singleTime, ...prevState.resultList]
 			}})
+		}
 	}
 
 	clear() {
@@ -80,15 +82,23 @@ class Stopwatch extends React.Component {
 		})
 	}
 
+	clearAll() {
+		if(!this.state.running) {
+			this.clear();
+		this.reset();
+		}
+	}
+
 	render() {
 		return(
 				<div id="container">
 					<div className="controls">
-						<Button text="Start" onClick={this.start.bind(this)} />
-						<Button text="Stop"  onClick={this.stop.bind(this)} />
-						<Button text="Reset" onClick={this.reset.bind(this)} />
-						<Button text="Save" onClick={this.shotTime.bind(this)} />
-						<Button text="Reset List" onClick={this.clear.bind(this)} />
+						{((this.state.miliseconds === 0 || this.state.running === false) ? 
+							<Button text="Start" onClick={this.start.bind(this)} /> : <Button text="Stop"  onClick={this.stop.bind(this)} />)}
+						{((this.state.resultList.length !== 0 || this.state.miliseconds !== 0 || this.state.seconds !== 0 || this.state.minutes !== 0) ? 
+							<Button text="Reset" onClick={this.clearAll.bind(this)} /> : null)}
+						{((this.state.miliseconds !== 0 || this.state.seconds !== 0 || this.state.minutes !== 0) ? 
+							<Button text="Save" onClick={this.shotTime.bind(this)} /> : null)}
 					</div>
 					<Display result={this.format(this.state)} />
 					<ResultList list={this.state.resultList} />
