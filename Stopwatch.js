@@ -42,8 +42,7 @@ class Stopwatch extends React.Component {
 		this.calculate();
 	}
 
-	start(event) {
-		event.preventDefault();
+	start() {
 		if(!this.state.running) {
 			this.setState({ running: true })
 			this.watch = setInterval(() => this.step(), 10);
@@ -63,21 +62,15 @@ class Stopwatch extends React.Component {
 	}
 
 	shotTime() {
-		console.log('shot');
 			this.setState( (prevState) => { return { id: prevState.id + 1 }} )
-			let onceTime = {
+			let singleTime = {
 				time: this.format(this.state),
 				id: this.state.id
 			};
 
-			console.log(onceTime.time);
-			console.log(this.state.id);
-
 			this.setState( (prevState) => { return {
-				resultList: [onceTime, ...prevState.resultList]
+				resultList: [singleTime, ...prevState.resultList]
 			}})
-
-			console.log(this.state.resultList);
 	}
 
 	clear() {
@@ -97,19 +90,15 @@ class Stopwatch extends React.Component {
 						<Button text="Save" onClick={this.shotTime.bind(this)} />
 						<Button text="Reset List" onClick={this.clear.bind(this)} />
 					</div>
-					<div className="stopwatch">{this.format(this.state)}</div>
-					<ul className="result">
-						{
-							this.state.resultList.map( item => {
-
-								return <Item item={item} />
-
-							})
-						}
-					</ul>
+					<Display result={this.format(this.state)} />
+					<ResultList list={this.state.resultList} />
 				</div>
 			)
 	}
+}
+
+const Display = (props) => {
+	return 	<div className="stopwatch">{props.result}</div>
 }
 
 const Button = (props) => {
@@ -118,6 +107,16 @@ const Button = (props) => {
 
 const Item = (props) => {
 	return <li key={props.item.id}>Pomiar {props.item.id}{" => "}{props.item.time}</li>
+}
+
+const ResultList = (props) => {
+	return (
+		<ul className="result">
+			{props.list.map( item => {
+				return <Item item={item} />}
+			)}
+		</ul>
+	)
 }
 
 ReactDOM.render(<Stopwatch />, document.getElementById('root')); 
