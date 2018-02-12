@@ -1,4 +1,4 @@
 node_modules/
-package-lock.json 
-script-compiled.js
+package-lock.json
 .babelrc
+lib/

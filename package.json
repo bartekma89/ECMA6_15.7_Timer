@@ -12,7 +12,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel Stopwatch.js --watch --out-file script-compiled.js"
+    "start": "babel components --out-dir lib"
   },
   "repository": {
     "type": "git",

@@ -96,27 +96,3 @@ class Stopwatch extends React.Component {
 			)
 	}
 }
-
-const Display = (props) => {
-	return 	<div className="stopwatch">{props.result}</div>
-}
-
-const Button = (props) => {
-	return <button type='button' className="btn" {...props}>{props.text}</button>
-}
-
-const Item = (props) => {
-	return <li key={props.item.id}>Pomiar {props.item.id}{" => "}{props.item.time}</li>
-}
-
-const ResultList = (props) => {
-	return (
-		<ul className="result">
-			{props.list.map( item => {
-				return <Item item={item} />}
-			)}
-		</ul>
-	)
-}
-
-ReactDOM.render(<Stopwatch />, document.getElementById('root')); 
