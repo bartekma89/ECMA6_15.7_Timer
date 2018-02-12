@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,400i&subset=latin-ext');
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Lato', sans-serif;
+}
+
+body {
+	background: #2C3A47;
+	color: #fff;
+}
+
+#container {
+	margin: 40px auto;
+	max-width: 600px;
+	width: 60%;
+}
+
+.controls {
+	text-align: center;
+	margin: 10px;
+}
+
+.btn {
+	width: 150px;
+	height: 50px;
+	margin: 5px;
+	border: none;
+	font-size: 1.5em;
+	background-color: #ff7979;
+	color: #fff;
+	cursor: pointer;
+}
+
+.btn:hover {
+	background-color: #F8EFBA;
+	color: #000;
+}
+
+.stopwatch {
+	text-align: center;;
+	padding: 15px;
+	font-size: 2em;
+	cursor: pointer;
+}
+
+.result {
+	text-align: center;
+	list-style-type: none;
+	font-size: 1.5em;
+}
