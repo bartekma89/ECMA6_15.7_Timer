@@ -80,6 +80,13 @@ class Stopwatch extends React.Component {
 			console.log(this.state.resultList);
 	}
 
+	clear() {
+		this.setState({
+			resultList: [],
+			id: 1
+		})
+	}
+
 	render() {
 		return(
 				<div id="container">
@@ -88,16 +95,14 @@ class Stopwatch extends React.Component {
 						<Button text="Stop"  onClick={this.stop.bind(this)} />
 						<Button text="Reset" onClick={this.reset.bind(this)} />
 						<Button text="Save" onClick={this.shotTime.bind(this)} />
-						<Button text="Reset List" />
+						<Button text="Reset List" onClick={this.clear.bind(this)} />
 					</div>
 					<div className="stopwatch">{this.format(this.state)}</div>
 					<ul className="result">
 						{
 							this.state.resultList.map( item => {
 
-								return (
-										<li key={item.id}>{item.time}</li>
-									)
+								return <Item item={item} />
 
 							})
 						}
@@ -109,6 +114,10 @@ class Stopwatch extends React.Component {
 
 const Button = (props) => {
 	return <button type='button' className="btn" {...props}>{props.text}</button>
+}
+
+const Item = (props) => {
+	return <li key={props.item.id}>Pomiar {props.item.id}{" => "}{props.item.time}</li>
 }
 
 ReactDOM.render(<Stopwatch />, document.getElementById('root')); 
